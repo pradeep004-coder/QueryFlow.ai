@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect, useRef, useContext } from 'react';
-import { URL } from '../constants/Constants';
+import { AI_API } from '../constants/Constants';
+import { Backend_API } from '../constants/Constants';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import ChatSection from '../components/ChatSection';
@@ -23,8 +24,7 @@ export default function Home() {
     const token = localStorage.getItem("token");
     if (token && !isLoadingChats) {
       setIsLoadingChats(true);
-      // fetch("http://localhost:8333/getchats", {
-      fetch("https://queryflowai-backend.onrender.com/getchats", {
+      fetch(`${Backend_API}/getchats`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body: JSON.stringify({ chatLength: 0 })
@@ -96,7 +96,7 @@ export default function Home() {
     }
 
     try {
-      let res = await fetch(URL, { // send question and get response from AI
+      let res = await fetch(AI_API, { // send question and get response from AI
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -124,8 +124,7 @@ export default function Home() {
       if (answer && isLoggedIn && !isPosting) {
         setIsPosting(true);
         const token = localStorage.getItem("token");
-        // await fetch("http://localhost:8333/postchat", {
-        fetch("https://queryflowai-backend.onrender.com/postchat", {
+        fetch(`${Backend_API}/postchat`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
           body: JSON.stringify({ ...newEntry, answer })

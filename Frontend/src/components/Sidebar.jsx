@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import ConfirmLogout from "./ConfirmLogout";
+import { Backend_API } from "../constants/Constants";
 
 function Sidebar({ denySidebar, elementsRef }) {
 
@@ -31,8 +32,7 @@ function Sidebar({ denySidebar, elementsRef }) {
     if (context.isLoggedIn && context.canLoadMore && !loading) {
       setLoading(true);
       const token = localStorage.getItem("token");
-      fetch("https://queryflowai-backend.onrender.com/getchats", {
-      // fetch("http://localhost:8333/getchats", {
+      fetch(`${Backend_API}/getchats`, {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
         body: JSON.stringify({ chatLength: context.chat.length })

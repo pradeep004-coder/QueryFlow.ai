@@ -8,6 +8,7 @@ import { parseResponse } from "../utils/Helper";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import DateBadge from "./DateBadge";
+import { Backend_API } from "../constants/Constants";
 
 
 function ChatSection({ elementsRef }) {
@@ -88,8 +89,7 @@ function ChatSection({ elementsRef }) {
         if (isLoggedIn && canLoadMore && !loading) {
             const token = localStorage.getItem("token");
             setLoading(true);
-            fetch("https://queryflowai-backend.onrender.com/getchats", {
-            // fetch("http://localhost:8333/getchats", {
+            fetch(`${Backend_API}/getchats`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
                 body: JSON.stringify({ chatLength: chat.length })

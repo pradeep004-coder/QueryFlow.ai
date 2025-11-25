@@ -4,6 +4,7 @@ import React, { useRef, useContext, useState } from 'react'
 import { ChatContext } from "../context/context";
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import { Backend_API } from '@/src/constants/Constants';
 
 export default function Singup() {
     const [loading, setLoading] = useState(false);
@@ -47,8 +48,7 @@ export default function Singup() {
             passwordVal.length > 5
         ) {
             setLoading(true);
-            // fetch("http://localhost:8333/signup", {
-            fetch("https://queryflowai-backend.onrender.com/signup", {
+            fetch(`${Backend_API}/signup`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name: nameVal, email: emailVal, password: passwordVal })

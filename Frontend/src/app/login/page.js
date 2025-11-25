@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { ChatContext } from "../context/context";
+import { Backend_API } from '@/src/constants/Constants';
 
 export default function Login() {
     const [loading, setLoading] = useState(false);
@@ -28,8 +29,7 @@ export default function Login() {
 
         if (!loading && emailVal.length > 0 && passwordVal.length > 5) {
             setLoading(true);
-            // fetch("http://localhost:8333/login", {
-            fetch("https://queryflowai-backend.onrender.com/login", {
+            fetch(`${Backend_API}/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: emailVal, password: passwordVal })
