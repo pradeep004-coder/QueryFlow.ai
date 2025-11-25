@@ -11,56 +11,53 @@ import { toast } from 'react-toastify';
 
 export default function Home() {
   const [query, setQuery] = useState('');
-  const [chat, setChat] = useState([]);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isPosting, setIsPosting] = useState(false);
+  const [isLoadingChats, setIsLoadingChats] = useState(false);
   const scrollContainerRef = useRef(null);
-  const questionRefs = useRef([]);
+  const elementsRef = useRef([]);
   const textareaRef = useRef(null);
-  const context = useContext(ChatContext);
+  const { chat, setChat, isLoggedIn, setIsLoggedIn, setCanLoadMore, setIsAnsLoading } = useContext(ChatContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    if (token && !isLoadingChats) {
+      setIsLoadingChats(true);
+      // fetch("http://localhost:8333/getchats", {
       fetch("https://queryflowai-backend.onrender.com/getchats", {
         method: "POST",
         headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
-        body: JSON.stringify({ chatLength: chat.length })
+        body: JSON.stringify({ chatLength: 0 })
       })
         .then(response => {
           if (response.status === 401) {
-            context.setIsLoggedIn(false);
+            setIsLoggedIn(false);
             localStorage.removeItem("token");
+            return response.json();;
           }
-          context.setIsLoggedIn(true);
-          response.json();
+          setIsLoggedIn(true);
+          return response.json();
         })
         .then(data => {
-          if (!context.isLoggedIn) return;
-          if (data && data.success && Array.isArray(data.selectedChats)) {
-            setChat(prev => [...data.selectedChats, ...prev]);
-            context.setIsLoggedIn(true);
-            context.setCanLoadMore(data.canLoadMore);
+          if (data?.success && Array.isArray(data.selectedChats)) {
+            setChat([...data.selectedChats]);
+            setIsLoggedIn(true);
+            setCanLoadMore(data.canLoadMore);
             toast.success("Chats loaded successfully!")
           }
         })
         .catch(err => {
-          toast.error("Failed to load chats!")
+          toast.error("Failed to load chats!");
           return console.error("unable to load chats: ", err)
-        }).finally(() => setIsPosting(false));
+        }).finally(() => {
+          setIsLoadingChats(false);
+          if (elementsRef.current.length > 0) {
+            const lastElement = elementsRef.current[elementsRef.current.length - 1];
+            lastElement?.scrollIntoView({ behavior: "smooth" });
+          }
+        });
     }
   }, []);
-
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (scrollContainerRef.current) {
-  //       scrollContainerRef.current.scrollTo({
-  //         top: scrollContainerRef.current.scrollHeight,
-  //         behavior: 'smooth',
-  //       })
-  //     }
-  //   }, 100)
-  // }, [chat.length])
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -83,7 +80,7 @@ export default function Home() {
 
     setQuery('');
     setChat(prev => [...prev, newEntry]);
-    context.setIsAnsLoading(true)
+    setIsAnsLoading(true);
 
 
     const payload = {
@@ -106,8 +103,8 @@ export default function Home() {
       });
 
       const json = await res.json();   // process the response
-      answer = json.candidates[0].content.parts[0].text || "No answer available.";
-
+      answer = json.candidates[0].content.parts[0].text || "";
+      setIsAnsLoading(false);
       setChat(prev => {
         const updated = [...prev];
         const lastIndex = updated.length - 1;
@@ -124,10 +121,11 @@ export default function Home() {
         scrollContainerRef.current.scrollTop = scrollContainerRef.current.scrollHeight;
       }
 
-      if (answer && context.isLoggedIn && !isPosting) {
+      if (answer && isLoggedIn && !isPosting) {
         setIsPosting(true);
         const token = localStorage.getItem("token");
-        await fetch("https://queryflowai-backend.onrender.com/postchat", {
+        // await fetch("http://localhost:8333/postchat", {
+        fetch("https://queryflowai-backend.onrender.com/postchat", {
           method: "POST",
           headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
           body: JSON.stringify({ ...newEntry, answer })
@@ -138,9 +136,11 @@ export default function Home() {
       }
 
     } catch (error) {
+
+      toast.error("Oops!! Something went wrong\nCheck your connection.")
       console.error(error);
     } finally {
-      context.setIsAnsLoading(false);
+      setIsAnsLoading(false);
     }
   }
 
@@ -154,16 +154,15 @@ export default function Home() {
         <Navbar openSidebar={() => setShowSidebar(true)} />
         {showSidebar && (<Sidebar
           denySidebar={() => setShowSidebar(false)}
-          chat={chat} questionRefs={questionRefs}
+          elementsRef={elementsRef}
         />)
         }
         {!chat.length ?
           <WelcomeContent />
           : <ChatSection
-            scrollContainerRef={scrollContainerRef}
             chat={chat}
             setChat={setChat}
-            questionRefs={questionRefs}
+            elementsRef={elementsRef}
           />
         }
         <InputSection

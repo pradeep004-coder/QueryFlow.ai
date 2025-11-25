@@ -1,11 +1,12 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import React, { useRef, useContext } from 'react'
+import React, { useRef, useContext, useState } from 'react'
 import { ChatContext } from "../context/context";
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 
 export default function Singup() {
+    const [loading, setLoading] = useState(false);
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
@@ -40,17 +41,13 @@ export default function Singup() {
         if (passwordVal.length < 6) return toast.warning("Password must be atleast 6 characters long!!")
 
         if (
+            !loading &&
             nameVal.includes(" ") &&
             emailVal.length > 0 &&
             passwordVal.length > 5
         ) {
-            context.setUserData(prev => ({
-                ...prev,
-                name: nameVal,
-                email: emailVal,
-                password: passwordVal
-            }));
-
+            setLoading(true);
+            // fetch("http://localhost:8333/signup", {
             fetch("https://queryflowai-backend.onrender.com/signup", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -58,7 +55,13 @@ export default function Singup() {
             })
                 .then(response => response.json())
                 .then(data => {
-                    if (data && data.success && data.jwtToken) {
+                    if (data?.message === "user already exists") {
+                        return toast.error("Email already registered!! Login instead.")
+                    }
+                    if (!data?.success) {
+                        return toast.error("Something went wrong!!")
+                    }
+                    if (data?.jwtToken) {
                         localStorage.setItem("token", data.jwtToken);
                         context.setUserData({
                             name: data.name,
@@ -78,8 +81,17 @@ export default function Singup() {
                     }
                 })
                 .catch(error => {
-                    toast.error(data.message || "Signup failed!");
+                    toast.error("Signup failed!");
                     console.error("failed to post:", error)
+                })
+                .finally(() => {
+                    context.setUserData(prev => ({
+                        ...prev,
+                        name: nameVal,
+                        email: emailVal,
+                        password: passwordVal
+                    }));
+                    setLoading(false);
                 });
         }
     }
@@ -101,7 +113,7 @@ export default function Singup() {
                         <input ref={passwordRef} className='border-1 p-1 px-2 rounded-md' placeholder=" create password" type="password" id="password" />
                     </div>
                     <div className='flex flex-col justify-center mt-5'>
-                        <button type='submit' className='px-2 py-1 text-zinc-100 font-bold rounded-lg bg-zinc-600 hover:bg-zinc-500'>Create Account</button>
+                        <button type='submit' className={`px-2 py-1 text-zinc-100 font-bold rounded-lg ${loading? "bg-zinc-400":"bg-zinc-600 hover:bg-zinc-500"}`} disabled={loading}>Create Account</button>
                         <small className='text-center'>Already have an account?<Link href='/login' className='text-blue-800'>Login</Link></small>
                     </div>
                 </form>

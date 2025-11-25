@@ -22,7 +22,7 @@ export const parseResponse = (str) => {
         result.push({ 
           type: 'code', 
           content: codeBuffer.join('\n'), 
-          language : currentLang
+          language : currentLang.charAt(0).toUpperCase() + currentLang.slice(1)
         });
         codeBuffer = [];
       }
@@ -39,7 +39,11 @@ export const parseResponse = (str) => {
     else if (trimmed.endsWith('```')) {
       return;
     }
-    
+
+     else if (trimmed.startsWith("##")) {
+      result.push({ type: 't', content: line});
+    }
+
     else if (/^\*\*(.+?)\*\*$/.test(trimmed) || /^\*\s+\*\*(.+?):\*\*$/.test(trimmed)) { // strict match '**content:**', '*   **`#include <stdio.h>`:**'
       result.push({ type: 'h1', content: line});
     }

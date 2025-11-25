@@ -4,27 +4,23 @@ import bcrypt from "bcrypt";
 
 const signup = async (req, res) => {
     try {
-        const { name, email, password } = req.body;  // destructure submitted data from body
+        const { name, email, password } = req.body;
 
-        let user = await userModel.findOne({ email }); // get the detail of the user if exist
+        let user = await userModel.findOne({ email });
         if (user) {
-            // if user already exists return warning
-            console.log("User already exists!!!");
-            return res.status(409).json({ message: 'user already exists, login instesd', success: false });
+            return res.status(409).json({ message: 'user already exists', success: false });
         }
-        //else: user doest exists already
-        const user_model = new userModel({ name, email, password }); //create a new row for the new user
-        user_model.password = await bcrypt.hash(password, 10); //encript the password to ensure security
-        await user_model.save(); //save the new row
+        const user_model = new userModel({ name, email, password });
+        user_model.password = await bcrypt.hash(password, 10);
+        await user_model.save();
 
-        console.log("processing for jwt token...");
         const jwtToken = jwt.sign(
             { _id: user_model._id, email },
             process.env.JWT_Secret,
             { expiresIn: "24h" }
         );
-        console.log("sending res to user");
-        res.status(200).json({
+        
+        res.status(201).json({
             message: 'Signup successful!',
             success: true,
             jwtToken,
@@ -38,16 +34,15 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body;  // destructure submitted data from body
+        const { email, password } = req.body;
 
-        const user = await userModel.findOne({ email }); // get the detail of the user if exist
+        const user = await userModel.findOne({ email });
         if (!user) {
-            // if user dont exists return warning
-            return res.status(403).json({ message: 'login failed! email isnt registerd, signup instead', success: false });
+            return res.status(401).json({ message: 'email not registered', success: false });
         }
         const isPassEqual = await bcrypt.compare(password, user.password);
         if (!isPassEqual) {
-            return res.status(403).json({ message: 'login failed! incorrect password', success: false });
+            return res.status(401).json({ message: 'incorrect password', success: false });
         }
         const jwtToken = jwt.sign(
             { _id: user._id, email: user.email },

@@ -19,7 +19,7 @@ export function Collapsible({children}) {
                     ▼
                 </span>
             </button>
-            {isOpen && <div>{children}</div>}
+            {isOpen && <div className="whitespace-normal">{children}</div>}
         </div>
     )
 }
