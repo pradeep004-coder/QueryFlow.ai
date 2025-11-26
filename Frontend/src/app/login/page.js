@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { ChatContext } from "../context/context";
 import { Backend_API } from '@/src/constants/Constants.js';
