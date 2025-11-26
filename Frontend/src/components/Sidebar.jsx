@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { ChatContext } from "../app/context/context";
+import { ChatContext } from "../app/context/context.js";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import ConfirmLogout from "./ConfirmLogout";
-import { Backend_API } from "../constants/Constants";
+import { Backend_API } from "../constants/Constants.js";
 
 function Sidebar({ denySidebar, elementsRef }) {
 

@@ -3,12 +3,12 @@ import { ClipLoader } from "react-spinners";
 import Question from "./Question";
 import Answers from './Answers';
 import { Collapsible } from "./Collapsible";
-import { ChatContext } from "../app/context/context";
-import { parseResponse } from "../utils/Helper";
+import { ChatContext } from "../app/context/context.js";
+import { parseResponse } from "../utils/Helper.js";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import DateBadge from "./DateBadge";
-import { Backend_API } from "../constants/Constants";
+import { Backend_API } from "../constants/Constants.js";
 
 
 function ChatSection({ elementsRef }) {

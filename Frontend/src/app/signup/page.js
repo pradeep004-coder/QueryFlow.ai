@@ -4,7 +4,7 @@ import React, { useRef, useContext, useState } from 'react'
 import { ChatContext } from "../context/context";
 import Link from 'next/link';
 import { toast } from 'react-toastify';
-import { Backend_API } from '@/src/constants/Constants';
+import { Backend_API } from '@/src/constants/Constants.js';
 import { ClipLoader } from 'react-spinners';
 
 export default function Singup() {

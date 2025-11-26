@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { ChatContext } from "../app/context/context";
+import { ChatContext } from "../app/context/context.js";
 import { useRouter } from "next/navigation";
 
 function Navbar({ openSidebar }) {

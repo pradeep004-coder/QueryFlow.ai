@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef, useContext } from 'react';
-import { AI_API, Backend_API } from '../constants/Constants';
+import { AI_API, Backend_API } from '@/src/constants/Constants.js';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import ChatSection from '../components/ChatSection';
@@ -70,9 +70,11 @@ export default function Home() {
   }
 
   const askQuestion = async () => {
+    const trimmed = query.trim();
+    if (!trimmed) return;
 
     const newEntry = {
-      question: query.trim(),
+      question: trimmed,
       timestamp: getCurrentTime(),
     }
     let answer;
@@ -134,9 +136,7 @@ export default function Home() {
       }
 
     } catch (error) {
-
-      toast.error("Oops!! Something went wrong\nCheck your connection.")
-      console.error(error);
+      toast.error("Oops!! Something went wrong\nCheck your connection.");
     } finally {
       setIsAnsLoading(false);
     }

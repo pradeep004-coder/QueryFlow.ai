@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { ChatContext } from "../context/context";
-import { Backend_API } from '@/src/constants/Constants';
+import { Backend_API } from '@/src/constants/Constants.js';
 import { ClipLoader } from 'react-spinners';
 
 export default function Login() {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { ChatContext } from '../app/context/context';
+import { ChatContext } from '../app/context/context.js';
 import { toast } from 'react-toastify';
 
 function ConfirmLogout({setShow}) {
