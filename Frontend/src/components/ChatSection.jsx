@@ -8,7 +8,7 @@ import { parseResponse } from "../utils/Helper";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import DateBadge from "./DateBadge";
-import { Backend_API } from "../constants/Constants";
+import { Backend_API } from "../constants/constants";
 
 
 function ChatSection({ elementsRef }) {

@@ -1,36 +1,194 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# **QueryFlow – AI Chat Assistant**
 
-First, run the development server:
+QueryFlow is an AI-powered chat application built with **Next.js**, **Node.js**, and **Gemini AI API**, designed for fast, intelligent, and seamless query handling.
+It provides real-time conversational responses, secure user accounts, rich UI/UX features, and persistent chat storage.
 
-```bash
+🔗 **Live Demo:** [https://query-flow-ai-red.vercel.app/](https://query-flow-ai-red.vercel.app/)
+
+---
+
+## 🚀 **Tech Stack**
+
+### **Frontend**
+
+* Next.js (App Router)
+* React
+* Tailwind CSS
+* HTML, CSS, JavaScript
+* Gemini AI API
+* Syntax Highlighting + Markdown Rendering
+
+### **Backend**
+
+* Node.js
+* Express.js
+* MongoDB
+* Mongoose
+
+### **Deployment**
+
+* Vercel (Frontend)
+* Render (Backend)
+
+---
+
+## ⭐ **Features**
+
+### 🔥 **Major Features**
+
+* **Real-Time AI Responses**
+  Instant, accurate answers powered by the Gemini AI API.
+
+* **User Authentication System**
+  Secure login/sign-up with token-based authentication.
+
+* **Automatic Login Persistence (24 Hours)**
+  No need to re-login if the user revisits within 24 hours on the same device.
+
+* **Chat Storage**
+  All chats are stored and loaded from MongoDB so users never lose progress.
+
+* **Navigate to Any Query/Response Instantly**
+  Jump to any part of the conversation with smooth scroll anchoring.
+
+---
+
+### 💻 **Developer-Friendly Features**
+
+* **Collapsible Responses** (Ideal for long answers)
+* **Syntax Highlighting for Code Blocks**
+* **Copy to Clipboard** for code and AI responses
+* **Multi-Line Query Support**
+* **Markdown Rendering for AI Answers**
+
+---
+
+### 📱 **User-Friendly Design**
+
+* **Responsive UI** optimized for mobile, tablet & desktop
+* **Clean & minimal interface**
+* **Date & Time Badging** for each message
+* **Smooth animations** and interaction feedback
+
+---
+
+## 📁 **Folder Structure**
+
+### **Backend**
+
+Backend/
+│── Controllers/
+│   ├── AuthController.js
+│   ├── ChatController.js
+│
+│── Middlewares/
+│   ├── AuthValidation.js
+│   ├── ChatMiddleware.js
+│
+│── Models/
+│   ├── chat.js
+│   ├── db.js
+│   ├── user.js
+│
+│── Routes/
+│   ├── AuthRouter.js
+│   ├── ChatRouter.js
+│
+│── index.js
+│── package.json
+│── vercel.json
+│── .env
+
+
+### **Frontend**
+
+Frontend/
+│── public/
+│   ├── icons & images
+│
+│── src/
+│   ├── app/
+│   │   ├── login/page.js
+│   │   ├── signup/page.js
+│   │   ├── context/context.js
+│   │   ├── page.js (main chat UI)
+│   │
+│   ├── components/
+│   │   ├── Answers.jsx
+│   │   ├── ChatSection.jsx
+│   │   ├── Code.jsx
+│   │   ├── Collapsible.jsx
+│   │   ├── ConfirmLogout.jsx
+│   │   ├── DateBadge.jsx
+│   │   ├── InputSection.jsx
+│   │   ├── MarkDown.jsx
+│   │   ├── Navbar.jsx
+│   │   ├── Question.jsx
+│   │   ├── Sidebar.jsx
+│   │   └── WelcomeContent.jsx
+│   │
+│   ├── constants/
+│   │   └── Constants.js
+│   │
+│   ├── utils/
+│   │   └── Helper.js
+│
+│── globals.css
+│── package.json
+
+
+---
+
+## ⚙️ **How It Works**
+
+1. User logs in (or stays logged-in via 24hr token).
+2. User enters a query.
+3. Query is sent Gemini AI API.
+4. Response returns in real-time and gets rendered with Markdown & syntax highlighting.
+5. Chat is stored in MongoDB for future sessions.
+6. User can navigate, collapse, copy, and manage responses easily.
+
+---
+
+## 🛠️ **Installation & Setup**
+
+### **1. Clone the repository**
+
+git clone https://github.com/pradeep004-coder/QueryFlow.ai.git
+cd QueryFlow.ai
+
+
+
+### **2. Backend Setup**
+
+cd Backend
+npm install
+
+
+Create a **.env** file with:
+
+MONGO_URI=your_mongo_url
+JWT_SECRET=your_secret
+GEMINI_API_KEY=your_key
+
+
+Start backend:
+node index.js
+
+### **3. Frontend Setup**
+
+cd Frontend
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 📌 **Future Improvements**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* Dark/Light theme toggle
+* Export chat as PDF
+* Voice input & response
+* Multi-model AI selection
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
