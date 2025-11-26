@@ -4,7 +4,8 @@ import React, { useRef, useContext, useState } from 'react'
 import { ChatContext } from "../context/context";
 import Link from 'next/link';
 import { toast } from 'react-toastify';
-import { Backend_API } from '@/src/constants/constants';
+import { Backend_API } from '@/src/constants/Constants';
+import { ClipLoader } from 'react-spinners';
 
 export default function Singup() {
     const [loading, setLoading] = useState(false);
@@ -113,7 +114,16 @@ export default function Singup() {
                         <input ref={passwordRef} className='border-1 p-1 px-2 rounded-md' placeholder=" create password" type="password" id="password" />
                     </div>
                     <div className='flex flex-col justify-center mt-5'>
-                        <button type='submit' className={`px-2 py-1 text-zinc-100 font-bold rounded-lg ${loading? "bg-zinc-400":"bg-zinc-600 hover:bg-zinc-500"}`} disabled={loading}>Create Account</button>
+                        <button type='submit' className={`px-2 py-1 text-zinc-100 font-bold rounded-lg ${loading? "bg-zinc-400":"bg-zinc-600 hover:bg-zinc-500"}`} disabled={loading}>
+                             {loading ? <ClipLoader
+                                color="grey"
+                                loading={loading}
+                                size={12}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                                : "Create Account"}
+                        </button>
                         <small className='text-center'>Already have an account?<Link href='/login' className='text-blue-800'>Login</Link></small>
                     </div>
                 </form>

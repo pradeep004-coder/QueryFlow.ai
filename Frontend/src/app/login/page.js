@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import React, { useState, useEffect, useRef, useContext } from 'react';
 import { toast } from 'react-toastify';
 import { ChatContext } from "../context/context";
-import { Backend_API } from '@/src/constants/constants';
+import { Backend_API } from '@/src/constants/Constants';
+import { ClipLoader } from 'react-spinners';
 
 export default function Login() {
     const [loading, setLoading] = useState(false);
@@ -85,7 +86,16 @@ export default function Login() {
                         <input ref={passwordRef} className='border-1 p-1 px-2 rounded-md' placeholder=" enter password ..." type="password" name="password" />
                     </div>
                     <div className='flex flex-col justify-center mt-5'>
-                        <button type='submit' className={`px-2 py-1 text-zinc-100 font-bold rounded-lg ${loading ? "bg-zinc-400" : "bg-zinc-600 hover:bg-zinc-500"}`} disabled={loading}>Login</button>
+                        <button type='submit' className={`px-2 py-1 text-zinc-100 font-bold rounded-lg ${loading ? "bg-zinc-400" : "bg-zinc-600 hover:bg-zinc-500"}`} disabled={loading}>
+                            {loading ? <ClipLoader
+                                color="grey"
+                                loading={loading}
+                                size={12}
+                                aria-label="Loading Spinner"
+                                data-testid="loader"
+                            />
+                                : "Login"}
+                        </button>
                         <small className='text-center'>Don't have an account?<Link href="/signup" className='text-blue-800'>Create Account</Link></small>
                     </div>
                 </form>

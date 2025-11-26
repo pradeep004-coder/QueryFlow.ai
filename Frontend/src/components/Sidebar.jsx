@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { ClipLoader } from "react-spinners";
 import ConfirmLogout from "./ConfirmLogout";
-import { Backend_API } from "../constants/constants";
+import { Backend_API } from "../constants/Constants";
 
 function Sidebar({ denySidebar, elementsRef }) {
 

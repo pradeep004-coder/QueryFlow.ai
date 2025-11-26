@@ -1,7 +1,6 @@
 'use client';
 import { useState, useEffect, useRef, useContext } from 'react';
-import { AI_API } from '../constants/constants';
-import { Backend_API } from '../constants/constants';
+import { AI_API, Backend_API } from '../constants/Constants';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import ChatSection from '../components/ChatSection';
