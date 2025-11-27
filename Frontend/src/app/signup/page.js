@@ -100,7 +100,7 @@ export default function Singup() {
     return (
         <>
             <div className='h-screen w-full bg-zinc-200 text-black fixed'>
-                <form className='p-2 w-[400px] mx-auto mt-[10%]' onSubmit={handleSubmit}>
+                <form className='p-2 w-[80%] md:w-[400px] mx-auto mt-[10%]' onSubmit={handleSubmit}>
                     <div className="flex flex-col mb-3">
                         <label htmlFor='name'>Full Name*:</label>
                         <input ref={nameRef} className='border-1 p-1 px-2 rounded-md' placeholder=" enter your name ..." id="name" />

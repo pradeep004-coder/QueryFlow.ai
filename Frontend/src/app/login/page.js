@@ -76,7 +76,7 @@ export default function Login() {
     return (
         <>
             <div className='h-screen w-full bg-zinc-200 fixed text-black'>
-                <form className='p-2 w-[400px] mx-auto mt-[10%]' onSubmit={handleSubmit}>
+                <form className='p-2 w-[80%] md:w-[400px] mx-auto mt-[10%]' onSubmit={handleSubmit}>
                     <div className="flex flex-col mb-3">
                         <label htmlFor='email'>Email address*:</label>
                         <input ref={emailRef} className='border-1 p-1 px-2 rounded-md' placeholder=" enter email ..." id="email" />
