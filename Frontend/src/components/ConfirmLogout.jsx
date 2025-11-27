@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { ChatContext } from '../app/context/context.js';
 import { toast } from 'react-toastify';
 
-function ConfirmLogout({setShow}) {
+function ConfirmLogout({setShow, handleCloseSidebar}) {
 
   const [isOpen, setIsOpen] = useState(false);
   const {setIsLoggedIn, setChat} = useContext(ChatContext);
@@ -18,9 +18,10 @@ function ConfirmLogout({setShow}) {
     localStorage.removeItem("token");
     setIsOpen(false);
     toast.info("Logged out!!");
+    setShow(false);
+    setChat([]);
     setTimeout(() => {
-      setShow(false);
-      setChat([]);
+      handleCloseSidebar();
     }, 300);
   }
   

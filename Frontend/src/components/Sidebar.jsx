@@ -137,7 +137,7 @@ function Sidebar({ denySidebar, elementsRef }) {
             </button>}
         </div>
       </div>
-      {showConfirm && <ConfirmLogout setShow={setShowConfirm} />}
+      {showConfirm && <ConfirmLogout setShow={setShowConfirm} handleCloseSidebar={handleCloseSidebar} />}
     </div>
   )
 }
