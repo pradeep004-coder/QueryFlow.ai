@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 function ConfirmLogout({setShow}) {
 
   const [isOpen, setIsOpen] = useState(false);
-  const {setIsLoggedIn} = useContext(ChatContext);
+  const {setIsLoggedIn, setChat} = useContext(ChatContext);
 
   useEffect(() => {
     setTimeout(() => {
@@ -20,6 +20,7 @@ function ConfirmLogout({setShow}) {
     toast.info("Logged out!!");
     setTimeout(() => {
       setShow(false);
+      setChat([]);
     }, 300);
   }
   
